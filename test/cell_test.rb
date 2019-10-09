@@ -47,7 +47,6 @@ class CellTest < Minitest::Test
   end
 
   def test_render_method
-
     assert_equal ".", @cell.render
     @cell.fire_upon
     assert_equal "M", @cell.render
@@ -65,5 +64,11 @@ class CellTest < Minitest::Test
     cell3.place_ship(ship2)
     cell3.fire_upon
     assert_equal "X", cell3.render
+
+    cell4 = Cell.new("A4")
+    assert_equal ".", cell4.render
+    ship3 = Ship.new('Cruiser', 3)
+    cell4.place_ship(ship3)
+    assert_equal "S", cell4.render(true)
   end
 end

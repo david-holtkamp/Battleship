@@ -31,8 +31,10 @@ attr_reader :coordinate, :ship, :fired_upon
     end
   end
 
-  def render
-    if !@ship && !@fired_upon
+  def render(bool = false)
+    if bool && !@fired_upon && @ship
+      "S"
+    elsif !@ship && !@fired_upon
       "."
     elsif @fired_upon && @ship && @ship.sunk?
       "X"
