@@ -1,10 +1,10 @@
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../cell.rb'
-require_relative '../ship.rb'
+require_relative '../lib/cell.rb'
+require_relative '../lib/ship.rb'
 
-class CellTest < Minitest::Test 
+class CellTest < Minitest::Test
   def setup
     @cell = Cell.new("A1")
   end
@@ -17,8 +17,8 @@ class CellTest < Minitest::Test
     assert_equal "A1", @cell.coordinate
   end
 
-  def test_not_assigned_to_ship_by_default
-    assert_equal nil, @cell.ship
+  def test_not_assigned_to_a_ship_by_default
+    assert_nil @cell.ship
   end
 
   def test_empty_method_shows_true_by_default
@@ -57,12 +57,18 @@ class CellTest < Minitest::Test
     cell2.place_ship(ship)
     cell2.fire_upon
     assert_equal "H", cell2.render
-    
+
     cell3 = Cell.new("A3")
     assert_equal ".", cell3.render
     ship2 = Ship.new('Dingy', 1)
     cell3.place_ship(ship2)
     cell3.fire_upon
     assert_equal "X", cell3.render
+
+    cell4 = Cell.new("A4")
+    assert_equal ".", cell4.render
+    ship3 = Ship.new('Cruiser', 3)
+    cell4.place_ship(ship3)
+    assert_equal "S", cell4.render(true)
   end
 end

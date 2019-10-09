@@ -1,7 +1,7 @@
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../ship.rb'
+require_relative '../lib/ship.rb'
 
 class ShipTest < Minitest::Test
   def setup
@@ -16,7 +16,7 @@ class ShipTest < Minitest::Test
   end
 
   def test_it_has_a_correct_length
-    assert_equal 3, @ship.length 
+    assert_equal 3, @ship.length
   end
 
   def test_health_equal_to_length
