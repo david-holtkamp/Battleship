@@ -28,20 +28,19 @@ class BoardTest < Minitest::Test
   end
 
   def test_validate_placement_method_for_length_check
-    skip
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
     
-    assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2"])
-    assert_equal true, @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.length(cruiser, ["A1", "A2"])
+    assert_equal true, @board.length(cruiser, ["A1", "A2", "A3"])
 
-    assert_equal true, @board.valid_placement?(cruiser, ["A1", "A2"])
-    assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+    assert_equal true, @board.length(submarine, ["A1", "A2"])
+    assert_equal false, @board.length(submarine, ["A1", "A2", "A3"])
   end
 
   def test_validate_placement_method_for_consecutive_coordinates
-    skip
     cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
     assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2", "A4"])
     assert_equal false, @board.valid_placement?(cruiser, ["A3", "A2", "A1"])
@@ -51,14 +50,14 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.valid_placement?(cruiser, ["A1", "B1", "C1"])
     assert_equal true, @board.valid_placement?(cruiser, ["B2", "C2", "D2"])
 
-  end
-
-  def test_validate_placement_method_for_diagonal_coordinates
-    skip
-    cruiser = Ship.new("Cruiser", 3)
-
     assert_equal false, @board.valid_placement?(cruiser, ["A1", "B2", "C3"])
     assert_equal false, @board.valid_placement?(cruiser, ["B2", "C3", "D4"])
-  end
 
+    assert_equal false, @board.valid_placement?(cruiser, ["A1", "A3"])
+    assert_equal false, @board.valid_placement?(cruiser, ["A4", "A5"])
+    assert_equal false, @board.valid_placement?(cruiser, ["A4", ""])
+    assert_equal false, @board.valid_placement?(cruiser, [])
+    assert_equal true, @board.valid_placement?(submarine, ["A1", "A2"])
+    assert_equal true, @board.valid_placement?(submarine, ["A1", "B1"])
+  end
 end
