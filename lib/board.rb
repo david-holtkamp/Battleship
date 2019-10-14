@@ -16,7 +16,7 @@ class Board
     valid = coors.map {|coor| valid_coordinate?(coor)}
     no_ships = coors.map do |coor| 
       if @cells[coor]
-      @cells[coor].ship == nil
+      @cells[coor].empty?
       end
     end
     length(ship, coors) && order(ship, coors) && valid.all? && no_ships.all? 
