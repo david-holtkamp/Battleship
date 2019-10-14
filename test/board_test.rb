@@ -7,15 +7,15 @@ require_relative '../lib/ship.rb'
 
 
 
-class BoardTest < Minitest::Test 
+class BoardTest < Minitest::Test
   def setup
     @board = Board.new
   end
-  
+
   def test_it_exists
     assert_instance_of Board, @board
   end
-  
+
   def test_cells_is_a_hash
     assert_instance_of Hash, @board.cells
     assert_equal 16, @board.cells.length
@@ -30,7 +30,7 @@ class BoardTest < Minitest::Test
   def test_validate_placement_method_for_length_check
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
-    
+
     assert_equal false, @board.length(cruiser, ["A1", "A2"])
     assert_equal true, @board.length(cruiser, ["A1", "A2", "A3"])
 
@@ -62,33 +62,32 @@ class BoardTest < Minitest::Test
   end
 
   def test_place_ship_method_when_all_checks_pass
-    skip
     cruiser = Ship.new("Cruiser", 3)
 
     ["A1", "A2", "A3"].map do |coor|
       assert_nil @board.cells[coor].ship
-    end 
-    
+    end
+
     assert_equal true, @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
     @board.place(cruiser, ["A1", "A2", "A3"])
-    
+
     ["A1", "A2", "A3"].map do |coor|
-      assert_equal @board.cells[coor].ship == cruiser
-    end 
+      assert_equal @board.cells[coor].ship, cruiser
+    end
   end
 
   def test_place_ship_method_when_a_check_fails
-    skip
+  
     cruiser = Ship.new("Cruiser", 3)
 
     ["A1", "A2", "A4"].map do |coor|
       assert_nil @board.cells[coor].ship
-    end 
+    end
     assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2", "A4"])
     @board.place(cruiser, ["A1", "A2", "A4"])
 
     ["A1", "A2", "A4"].map do |coor|
       assert_nil @board.cells[coor].ship
-    end 
+    end
   end
 end
