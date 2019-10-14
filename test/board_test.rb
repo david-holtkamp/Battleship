@@ -60,4 +60,35 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.valid_placement?(submarine, ["A1", "A2"])
     assert_equal true, @board.valid_placement?(submarine, ["A1", "B1"])
   end
+
+  def test_place_ship_method_when_all_checks_pass
+    skip
+    cruiser = Ship.new("Cruiser", 3)
+
+    ["A1", "A2", "A3"].map do |coor|
+      assert_nil @board.cells[coor].ship
+    end 
+    
+    assert_equal true, @board.valid_placement?(cruiser, ["A1", "A2", "A3"])
+    @board.place(cruiser, ["A1", "A2", "A3"])
+    
+    ["A1", "A2", "A3"].map do |coor|
+      assert_equal @board.cells[coor].ship == cruiser
+    end 
+  end
+
+  def test_place_ship_method_when_a_check_fails
+    skip
+    cruiser = Ship.new("Cruiser", 3)
+
+    ["A1", "A2", "A4"].map do |coor|
+      assert_nil @board.cells[coor].ship
+    end 
+    assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2", "A4"])
+    @board.place(cruiser, ["A1", "A2", "A4"])
+
+    ["A1", "A2", "A4"].map do |coor|
+      assert_nil @board.cells[coor].ship
+    end 
+  end
 end
