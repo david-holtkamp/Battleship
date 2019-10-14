@@ -14,7 +14,12 @@ class Board
 
   def valid_placement?(ship, coors)
     valid = coors.map {|coor| valid_coordinate?(coor)}
-    length(ship, coors) && order(ship, coors) && valid.all?
+    no_ships = coors.map do |coor| 
+      if @cells[coor]
+      @cells[coor].empty?
+      end
+    end
+    length(ship, coors) && order(ship, coors) && valid.all? && no_ships.all? 
   end
 
   def length(ship, coors)
