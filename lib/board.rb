@@ -35,13 +35,9 @@ class Board
 
   def make_horizontal(coors)
     coor = [coors[0]]
-
-    def increment(num, coor)
-      coor << coor[num].succ
-    end
-
+    
     (coors.count-1).times do |i|
-      increment(i, coor)
+      increment(:horz, i, coor)
     end
     coor
   end
@@ -49,14 +45,18 @@ class Board
   def make_vert(coors)
     coor = [coors[0]]
 
-    def increment(num, coor)
-      coor << coor[num].split('')[0].succ + coor[num].split('')[1]
-    end
-
     (coors.count-1).times do |i|
-      increment(i, coor)
+      increment(:vert, i, coor)
     end
     coor
+  end
+
+  def increment(type, num, coor)
+    if type == :horz
+      coor << coor[num].succ
+    elsif type == :vert
+      coor << coor[num].split('')[0].succ + coor[num].split('')[1]
+    end
   end
 
   def place(ship, coors)
