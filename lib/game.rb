@@ -3,9 +3,15 @@ require_relative './cell.rb'
 require_relative './ship.rb'
 
 class Game
+  attr_reader :cpu_board, :cpu_cruiser, :cpu_submarine, :player_board, :player_cruiser, :player_submarine 
   include Cell_Creation
   def initialize
     @cpu_board = nil
+    @cpu_cruiser = Ship.new("Cruiser", 2)
+    @cpu_submarine = Ship.new("Submarine", 3)
+    @player_board = nil
+    @player_cruiser = Ship.new("Cruiser", 2)
+    @player_submarine = Ship.new("Submarine", 3)
   end
 
   def welcome
@@ -23,11 +29,10 @@ class Game
   end
 
   def cpu_setup
+    @player_board = Board.new
     @cpu_board = Board.new
-    cpu_cruiser = Ship.new("Cruiser", 2)
-    cpu_submarine = Ship.new("Submarine", 3)
-    create_coors(cpu_cruiser)
-    create_coors(cpu_submarine)
+    create_coors(@cpu_cruiser)
+    create_coors(@cpu_submarine)
   end
 
   def create_coors ship
@@ -69,10 +74,33 @@ class Game
       start
     end
   end
+
+  def render_boards
+    puts "*****CPU BOARD*****"
+    puts @cpu_board.render
+    puts "*****PLAYER BOARD*****"
+    puts @player_board.render
+  end
 end
 
 game = Game.new
 game.welcome
 play = gets.chomp
 game.ready_to_play?(play)
+game.render_boards
+puts "You have a two ships to place. One is a cruiser with a length of 2 and the other is a submarine with a length of 3."
+puts "***Rules for Placement***"
+puts "Coordinates must be in sequential order either horizonatally or vertically."
+print "Please input the coordinates for your cruiser seperating them by a single space:  "
+cruiser_coors = gets.chomp.split(" ").map(&:upcase)
+if !game.player_board.valid_placement?(game.player_cruiser, cruiser_coors)
+  print "You input an invalid set of coordinates. Please follow the the Rules for Placement"
+  cruiser_coors = gets.chomp.split(" ").map(&:upcase)
+else
+  game.player_board.place(game.player_cruiser, cruiser_coors)
+  print "Thank You! Please input the coordinates for your submarine seperating them by a single space:  "
+end
+sub_coors = gets.chomp.split(" ").map(&:upcase)
+p cruiser_coors
+p sub_coors
 
