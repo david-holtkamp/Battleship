@@ -7,11 +7,11 @@ class Game
   include Cell_Creation
   def initialize
     @cpu_board = nil
-    @cpu_cruiser = Ship.new("Cruiser", 2)
-    @cpu_submarine = Ship.new("Submarine", 3)
+    @cpu_cruiser = Ship.new("Cruiser", 3)
+    @cpu_submarine = Ship.new("Submarine", 2)
     @player_board = nil
-    @player_cruiser = Ship.new("Cruiser", 2)
-    @player_submarine = Ship.new("Submarine", 3)
+    @player_cruiser = Ship.new("Cruiser", 3)
+    @player_submarine = Ship.new("Submarine", 2)
   end
 
   def welcome
@@ -100,7 +100,7 @@ play = gets.chomp
 game.ready_to_play?(play)
 game.render_boards
 
-puts "You have two ships to place. One is a cruiser with a length of 2 and the other is a submarine with a length of 3."
+puts "You have two ships to place. One is a cruiser with a length of 3 and the other is a submarine with a length of 2."
 puts "***Rules for Placement***"
 puts "Coordinates must be in sequential order either horizonatally or vertically."
 print "Please input the coordinates for your cruiser seperating them by a single space:  "
