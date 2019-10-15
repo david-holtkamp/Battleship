@@ -50,7 +50,7 @@ class Board
     coor = [coors[0]]
 
     def increment(num, coor)
-      coor << coor[num].split('')[0].succ + coor[0].split('')[1]
+      coor << coor[num].split('')[0].succ + coor[num].split('')[1]
     end
 
     (coors.count-1).times do |i|
