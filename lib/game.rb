@@ -75,11 +75,22 @@ class Game
     end
   end
 
-  def render_boards
+  def render_boards(bool = false)
     puts "*****CPU BOARD*****"
     puts @cpu_board.render
     puts "*****PLAYER BOARD*****"
-    puts @player_board.render
+    puts @player_board.render(bool)
+  end
+
+  def player_placement ship, coor
+    if !@player_board.valid_placement?(ship, coor)
+      print "You input an invalid set of coordinates. Please follow the the Rules for Placement and resubmit:  "
+      coors = gets.chomp.split(" ").map(&:upcase)
+      player_placement(ship, coors)
+    else
+      @player_board.place(ship, coor)
+      puts "Thank You!"
+    end
   end
 end
 
@@ -88,19 +99,19 @@ game.welcome
 play = gets.chomp
 game.ready_to_play?(play)
 game.render_boards
+
 puts "You have two ships to place. One is a cruiser with a length of 2 and the other is a submarine with a length of 3."
 puts "***Rules for Placement***"
 puts "Coordinates must be in sequential order either horizonatally or vertically."
 print "Please input the coordinates for your cruiser seperating them by a single space:  "
 cruiser_coors = gets.chomp.split(" ").map(&:upcase)
-if !game.player_board.valid_placement?(game.player_cruiser, cruiser_coors)
-  print "You input an invalid set of coordinates. Please follow the the Rules for Placement"
-  cruiser_coors = gets.chomp.split(" ").map(&:upcase)
-else
-  game.player_board.place(game.player_cruiser, cruiser_coors)
-  print "Thank You! Please input the coordinates for your submarine seperating them by a single space:  "
-end
+game.player_placement(game.player_cruiser, cruiser_coors)
+game.render_boards(true)
+
+print "Please input the coordinates for your submarine seperating them by a single space:  "
 sub_coors = gets.chomp.split(" ").map(&:upcase)
+game.player_placement(game.player_submarine, sub_coors)
+game.render_boards(true)
+
 p cruiser_coors
 p sub_coors
-
