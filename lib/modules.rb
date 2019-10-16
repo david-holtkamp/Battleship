@@ -27,7 +27,9 @@ module Text_Lines
       6 => "Please input the coordinates for your submarine seperating them by a single space:  ",
       7 => "All ships have been placed",
       8 => "Player, please select a coordinate to fire upon:  ",
-      9 => "Would you like to play again Y/N?  "
+      9 => "Would you like to play again Y/N?  ",
+      10 => "That is not a valid coordinate please choose a new coordinate.",
+      11 => "IIIIIIDIOT YOU ALREADY SHOT THERE. TRY AGAIN YOU TROGLODYTE."
     }
     msg[num]
   end
