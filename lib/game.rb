@@ -24,6 +24,43 @@ class Game
     render_boards
   end
 
+  def toggle_turns turn
+    if turn.player_turn
+      coor = turn.take_turn.upcase
+      ship_to_hit(@cpu_board, coor, "Player's")
+    else
+      coor = turn.take_turn
+      ship_to_hit(@player_board, coor, "CPU's")
+    end
+
+    render_boards(true)
+
+    if winner?
+      puts msg(9)
+      again = gets.chomp.upcase
+    else
+      toggle_turns(turn)
+    end
+  end
+
+  def ship_to_hit board, coor, shooter
+      if !board.cells[coor].empty?
+        board.cells[coor].fire_upon
+        puts hit_msg(board.cells[coor].render, coor, shooter)
+      else 
+        board.cells[coor].fire_upon
+        puts "#{shooter} shot on #{coor} was a miss!"
+      end
+  end
+
+  def hit_msg type, coor, shooter
+    if type == "X"
+      "#{shooter} shot on #{coor} was a hit and sunk the ship!"
+    elsif type == "H"
+      "#{shooter} shot on #{coor} hit a ship!"
+    end
+  end
+
   def cpu_setup
     @player_board = Board.new
     @cpu_board = Board.new
@@ -90,10 +127,13 @@ class Game
   end
 
   def winner? 
-    if game.cpu_cruiser.sunk? && game.cpu_submarine.sunk?
+    player_win = @cpu_cruiser.sunk? && @cpu_submarine.sunk?
+    cpu_win = @player_cruiser.sunk? && @player_submarine.sunk?
+    if player_win
       puts "Congrats You Won!"
-    elsif game.player_cruiser.sunk? && game.player_submarine.sunk?
+    elsif cpu_win
       puts "You Lose"
     end
+    player_win || cpu_win
   end
 end
