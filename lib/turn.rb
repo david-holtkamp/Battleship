@@ -1,5 +1,7 @@
+require './lib/modules'
 class Turn
-  attr_reader :player_turn
+  attr_reader :coors
+  attr_accessor :player_turn
   include Cell_Creation
   include Text_Lines
   def initialize
