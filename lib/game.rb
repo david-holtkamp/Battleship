@@ -43,14 +43,15 @@ class Game
     end
   end
 
-  def ship_to_hit board, coor, shooter
-      if !board.cells[coor].empty?
-        board.cells[coor].fire_upon
-        puts hit_msg(board.cells[coor].render, coor, shooter)
-      else 
-        board.cells[coor].fire_upon
-        puts "#{shooter} shot on #{coor} was a miss!"
-      end
+  def ship_to_hit board, coors, shooter
+    coor = check_coor(coors, board)
+    if !board.cells[coor].empty?
+      board.cells[coor].fire_upon
+      puts hit_msg(board.cells[coor].render, coor, shooter)
+    else 
+      board.cells[coor].fire_upon
+      puts "#{shooter} shot on #{coor} was a miss!"
+    end
   end
 
   def hit_msg type, coor, shooter
@@ -59,6 +60,21 @@ class Game
     elsif type == "H"
       "#{shooter} shot on #{coor} hit a ship!"
     end
+  end
+
+  def check_coor coor, board
+    if !board.valid_coordinate?(coor) 
+      puts msg(10)
+      response = gets.chomp.upcase
+      check_coor(response, board)
+    elsif board.cells[coor].fired_upon? 
+      puts msg(11)
+      response = gets.chomp.upcase
+      check_coor(response, board)
+    else
+      coor
+    end
+
   end
 
   def cpu_setup
