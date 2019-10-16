@@ -1,4 +1,4 @@
-require './lib/modules'
+require_relative './modules'
 class Turn
   attr_reader :coors
   attr_accessor :player_turn
