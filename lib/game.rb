@@ -1,10 +1,10 @@
 require_relative './board.rb'
-require_relative './cell.rb'
 require_relative './ship.rb'
 
 class Game
   attr_reader :cpu_board, :cpu_cruiser, :cpu_submarine, :player_board, :player_cruiser, :player_submarine 
   include Cell_Creation
+  include Text_Lines
   def initialize
     @cpu_board = nil
     @cpu_cruiser = Ship.new("Cruiser", 3)
@@ -15,17 +15,13 @@ class Game
   end
 
   def welcome
-    puts "Welcome to BATTLESHIP!"
-    print "Press P to play. Press Q to quit. "
+    puts msg(1)
+    print msg(2)
   end
 
-  def ready_to_play? play
-    if play.upcase == "P"
-      puts "Well then let's play!"
-      cpu_setup
-    else
-      puts "Thanks for playing!"
-    end
+  def run_game
+    cpu_setup
+    render_boards
   end
 
   def cpu_setup
@@ -92,26 +88,12 @@ class Game
       puts "Thank You!"
     end
   end
+
+  def winner? 
+    if game.cpu_cruiser.sunk? && game.cpu_submarine.sunk?
+      puts "Congrats You Won!"
+    elsif game.player_cruiser.sunk? && game.player_submarine.sunk?
+      puts "You Lose"
+    end
+  end
 end
-
-game = Game.new
-game.welcome
-play = gets.chomp
-game.ready_to_play?(play)
-game.render_boards
-
-puts "You have two ships to place. One is a cruiser with a length of 3 and the other is a submarine with a length of 2."
-puts "***Rules for Placement***"
-puts "Coordinates must be in sequential order either horizonatally or vertically."
-print "Please input the coordinates for your cruiser seperating them by a single space:  "
-cruiser_coors = gets.chomp.split(" ").map(&:upcase)
-game.player_placement(game.player_cruiser, cruiser_coors)
-game.render_boards(true)
-
-print "Please input the coordinates for your submarine seperating them by a single space:  "
-sub_coors = gets.chomp.split(" ").map(&:upcase)
-game.player_placement(game.player_submarine, sub_coors)
-game.render_boards(true)
-
-p cruiser_coors
-p sub_coors

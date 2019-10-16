@@ -12,3 +12,22 @@ module Cell_Creation
     coors_list = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
   end
 end
+
+module Text_Lines
+  def msg num
+    msg = {
+      1 => "Welcome to BATTLESHIP!",
+      2 => "Press P to play. Press Q to quit. ",
+      3 => "Well then let's play",
+      4 => "Thanks for playing!",
+      5 => "You have two ships to place. One is a cruiser with a length of 3 and the other is a submarine with a length of 2 \n" +
+      "***Rules for Placement*** \n" +
+      "Coordinates must be in sequential order either horizonatally or vertically. \n" +
+      "Please input the coordinates for your cruiser seperating them by a single space:  ",
+      6 => "Please input the coordinates for your submarine seperating them by a single space:  ",
+      7 => "All ships have been placed \n" +
+      "Player, please select a coordinate to fire upon:  "
+    }
+    msg[num]
+  end
+end
