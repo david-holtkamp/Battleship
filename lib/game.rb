@@ -1,5 +1,6 @@
 require_relative './board.rb'
 require_relative './ship.rb'
+require_relative './modules.rb'
 
 class Game
   attr_reader :cpu_board, :cpu_cruiser, :cpu_submarine, :player_board, :player_cruiser, :player_submarine 
@@ -89,7 +90,6 @@ class Game
     vertical = vert(ship) 
     coors = [horiz, vertical].sample
     @cpu_board.place(ship, coors)
-    p coors
   end
 
   def vert ship
