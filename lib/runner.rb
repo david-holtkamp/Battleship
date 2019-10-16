@@ -2,6 +2,7 @@ require_relative './board.rb'
 require_relative './cell.rb'
 require_relative './ship.rb'
 require_relative './game.rb'
+require_relative './turn.rb'
 include Text_Lines
 
 game = Game.new
@@ -23,9 +24,16 @@ def start_game play, game
     sub_coors = gets.chomp.split(" ").map(&:upcase)
     game.player_placement(game.player_submarine, sub_coors)
     game.render_boards(true)
+    msg(7)
 
-    puts msg(7)
-    
+    turn = Turn.new
+    result = game.toggle_turns(turn)
+    if result == "Y"
+      new_game = Game.new
+      start_game("P", new_game)
+    else
+      puts msg(4)
+    end
   else
     puts msg(4)
   end
@@ -33,5 +41,3 @@ def start_game play, game
 end
 
 start_game(play, game)
-
-# puts "All ships have been placed"

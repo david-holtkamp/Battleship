@@ -25,8 +25,9 @@ module Text_Lines
       "Coordinates must be in sequential order either horizonatally or vertically. \n" +
       "Please input the coordinates for your cruiser seperating them by a single space:  ",
       6 => "Please input the coordinates for your submarine seperating them by a single space:  ",
-      7 => "All ships have been placed \n" +
-      "Player, please select a coordinate to fire upon:  "
+      7 => "All ships have been placed",
+      8 => "Player, please select a coordinate to fire upon:  ",
+      9 => "Would you like to play again Y/N?  "
     }
     msg[num]
   end
